@@ -48,3 +48,76 @@ class Deck():
     
 #----------------------------------------------#
 # PLAYER Class
+class Player():
+    
+    # Initialization method
+    def __init__(self, name):
+        self.name = name        # Identified by name
+        self.all_cards = []     # Initially a list of empty card that will be filled
+
+    # Method to remove cards from a player
+    def remove_one_card(self):
+        return self.all_cards.pop(0)
+
+    # Method to add the card/cards to a player
+    def add_cards(self, new_cards):
+        # Check if list of new_cards is a list or a single card
+        if type(new_cards) == type([]):
+            self.all_cards.extend(new_cards)
+        else:
+            self.all_cards.append(new_cards)
+
+    # String method to print the player
+    def __str__(self):
+        return f"Player {self.name} has {len(self.all_cards)} cards."
+
+#----------------------------------------------#
+# GAME Class - GAME SETUP
+player_one = Player("P1")
+player_two = Player("P2")
+
+new_deck = Deck()
+new_deck.shuffle_deck()
+
+# Split the decks to both players
+for _ in range(26):
+    player_one.all_cards.append(new_deck.deal_once_card())
+    player_two.all_cards.append(new_deck.deal_once_card())
+
+# This will help to check if the game is over or not
+game_on = True
+
+# This is the current round number that will be displayed
+round_number = 0
+
+# Setting up the while loop until the game is on
+while game_on:
+
+    # Increasing the round number
+    round_number += 1
+    print(f"Round {round_number}")
+
+    # Check to see who wins if there are no cards in either player
+    if len(player_one.all_cards) == 0:
+        print("Player One, is out of cards!\n")
+        print("Player Two Wins!!!")
+        game_on = False
+        break
+    else:
+        print("Player Two, is out of cards!\n")
+        print("Player One Wins!!!")
+        game_on = False
+        break
+    
+    # Starting the round
+    player_one_cards = []
+    player_one_cards.append(player_one.remove_one_card())
+
+    player_two_cards = []
+    player_two_cards.append(player_two.remove_one_card())
+
+    
+
+
+
+#----------------------------------------------#
