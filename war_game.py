@@ -103,7 +103,7 @@ while game_on:
         print("Player Two Wins!!!")
         game_on = False
         break
-    else:
+    elif len(player_two.all_cards) == 0:
         print("Player Two, is out of cards!\n")
         print("Player One Wins!!!")
         game_on = False
@@ -116,8 +116,37 @@ while game_on:
     player_two_cards = []
     player_two_cards.append(player_two.remove_one_card())
 
-    
+    war = True
+    while war:
+        # Check if p1 has greater card than p2
+        if player_one_cards[-1].value > player_two_cards[-1].value:
+            player_one.add_cards(player_one_cards)
+            player_one.add_cards(player_two_cards)
+            war = False
+            
+        # Check if p1 has smaller card than p2
+        elif player_one_cards[-1].value < player_two_cards[-1].value:
+            player_two.add_cards(player_one_cards)
+            player_two.add_cards(player_two_cards)
+            war = False
+            
+        # Check if p1 has equally similar card than p2
+        else:
+            print("--WAR--")
 
-
-
+            # Check if enough cards are there or not for both players
+            if len(player_one.all_cards) < 18:
+                print("Player One - Not Enough Cards!\n")
+                print("Player Two Wins!!!")
+                game_on = False
+                break
+            elif len(player_two.all_cards) < 18:
+                print("Player Two - Not Enough Cards!\n")
+                print("Player One Wins!!!")
+                game_on = False
+                break
+            else:
+                for num in range(20):
+                    player_one_cards.append(player_one.remove_one_card())
+                    player_two_cards.append(player_two.remove_one_card())
 #----------------------------------------------#
